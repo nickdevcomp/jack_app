@@ -1,0 +1,705 @@
+function DrawerGame.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push constant 0
+push constant 0
+push constant 12
+call Eraser.new 3
+pop this 3
+push constant 0
+push constant 0
+push constant 12
+call Drawer.new 3
+pop this 2
+push pointer 0
+call DrawerGame.initMenu 1
+pop temp 0
+push pointer 0
+return
+function DrawerGame.initMenu 3
+push argument 0
+pop pointer 0
+push constant 380
+push constant 0
+push constant 381
+push constant 255
+call Screen.drawRectangle 4
+pop temp 0
+push constant 380
+push constant 0
+push constant 511
+push constant 1
+call Screen.drawRectangle 4
+pop temp 0
+push constant 380
+push constant 254
+push constant 511
+push constant 255
+call Screen.drawRectangle 4
+pop temp 0
+push constant 6
+call String.new 1
+push constant 80
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 88
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 0
+push constant 6
+call String.new 1
+push constant 80
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 89
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 1
+push constant 6
+call String.new 1
+push constant 84
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 2
+push constant 2
+push constant 50
+call Output.moveCursor 2
+pop temp 0
+push local 0
+call Output.printString 1
+pop temp 0
+push constant 2
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push constant 1
+call String.new 1
+push constant 48
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 4
+push constant 50
+call Output.moveCursor 2
+pop temp 0
+push local 1
+call Output.printString 1
+pop temp 0
+push constant 4
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push constant 1
+call String.new 1
+push constant 48
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 7
+push constant 50
+call Output.moveCursor 2
+pop temp 0
+push local 2
+call Output.printString 1
+pop temp 0
+push constant 7
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push constant 6
+call String.new 1
+push constant 69
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+return
+function DrawerGame.dispose 0
+push argument 0
+pop pointer 0
+push this 2
+call Drawer.dispose 1
+pop temp 0
+push this 3
+call Eraser.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function DrawerGame.switchMode 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+call Drawer.newFromEraser 1
+pop this 2
+push this 3
+call Eraser.erase 1
+pop temp 0
+push this 3
+call Eraser.dispose 1
+pop temp 0
+push this 2
+call Drawer.draw 1
+pop temp 0
+push constant 1
+pop this 1
+push constant 7
+push constant 56
+push constant 6
+call OutputExtensions.cleanChars 3
+pop temp 0
+push constant 7
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push constant 6
+call String.new 1
+push constant 68
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 2
+call Eraser.newFromDrawer 1
+pop this 3
+push this 2
+call Drawer.erase 1
+pop temp 0
+push this 2
+call Drawer.dispose 1
+pop temp 0
+push this 3
+call Eraser.draw 1
+pop temp 0
+push constant 7
+push constant 56
+push constant 6
+call OutputExtensions.cleanChars 3
+pop temp 0
+push constant 7
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push constant 6
+call String.new 1
+push constant 69
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+pop this 1
+push constant 0
+return
+label IF_FALSE1
+push constant 0
+return
+function DrawerGame.movePointer 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 3
+call Eraser.moveUp 1
+pop temp 0
+label IF_FALSE1
+push this 0
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 3
+call Eraser.moveDown 1
+pop temp 0
+label IF_FALSE2
+push this 0
+push constant 3
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 3
+call Eraser.moveLeft 1
+pop temp 0
+label IF_FALSE3
+push this 0
+push constant 4
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 3
+call Eraser.moveRight 1
+pop temp 0
+label IF_FALSE4
+label IF_FALSE0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 0
+push constant 1
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 2
+call Drawer.moveUp 1
+pop temp 0
+label IF_FALSE6
+push this 0
+push constant 2
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 2
+call Drawer.moveDown 1
+pop temp 0
+label IF_FALSE7
+push this 0
+push constant 3
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 2
+call Drawer.moveLeft 1
+pop temp 0
+label IF_FALSE8
+push this 0
+push constant 4
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 2
+call Drawer.moveRight 1
+pop temp 0
+label IF_FALSE9
+label IF_FALSE5
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function DrawerGame.readCorrectAdressAt 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+not
+not
+if-goto WHILE_END0
+push argument 2
+push argument 3
+call Output.moveCursor 2
+pop temp 0
+push constant 3
+push argument 1
+call KeyboardExtensions.readLimitedInt 2
+pop local 1
+push local 1
+push argument 4
+gt
+push local 1
+push argument 5
+lt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 0
+goto IF_END0
+label IF_FALSE0
+push argument 2
+push argument 3
+push argument 1
+call String.length 1
+push constant 3
+add
+call OutputExtensions.cleanChars 3
+pop temp 0
+label IF_END0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function DrawerGame.changeCoordinates 6
+push argument 0
+pop pointer 0
+push constant 8
+call String.new 1
+push constant 69
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 88
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 3
+push constant 8
+call String.new 1
+push constant 69
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 89
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 4
+push constant 0
+pop local 5
+push this 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+call Eraser.size 1
+pop local 0
+label IF_FALSE0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 2
+call Drawer.size 1
+pop local 0
+label IF_FALSE1
+push pointer 0
+push local 3
+push constant 14
+push constant 50
+push constant 1
+neg
+push constant 378
+push local 0
+sub
+call DrawerGame.readCorrectAdressAt 6
+pop local 1
+push pointer 0
+push local 4
+push constant 16
+push constant 50
+push constant 1
+neg
+push constant 256
+push local 0
+sub
+call DrawerGame.readCorrectAdressAt 6
+pop local 2
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push constant 14
+push constant 50
+push local 3
+call String.length 1
+push constant 3
+add
+call OutputExtensions.cleanChars 3
+pop temp 0
+push constant 16
+push constant 50
+push local 4
+call String.length 1
+push constant 3
+add
+call OutputExtensions.cleanChars 3
+pop temp 0
+push this 1
+push constant 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 3
+push local 1
+push local 2
+call Eraser.moveTo 3
+pop temp 0
+label IF_FALSE2
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 2
+push local 1
+push local 2
+call Drawer.moveTo 3
+pop temp 0
+label IF_FALSE3
+push constant 0
+return
+function DrawerGame.run 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+push this 1
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+push constant 90
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 3
+call Eraser.incSize 1
+pop temp 0
+label IF_FALSE2
+push local 0
+push constant 88
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 3
+call Eraser.decSize 1
+pop temp 0
+label IF_FALSE3
+label IF_FALSE1
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+push constant 90
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 2
+call Drawer.incSize 1
+pop temp 0
+label IF_FALSE5
+push local 0
+push constant 88
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 2
+call Drawer.decSize 1
+pop temp 0
+label IF_FALSE6
+label IF_FALSE4
+push local 0
+push constant 68
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push pointer 0
+call DrawerGame.changeCoordinates 1
+pop temp 0
+label IF_FALSE7
+push local 0
+push constant 83
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call DrawerGame.switchMode 1
+pop temp 0
+label IF_FALSE8
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 1
+pop this 0
+label IF_FALSE9
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push constant 2
+pop this 0
+label IF_FALSE10
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push constant 3
+pop this 0
+label IF_FALSE11
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push constant 4
+pop this 0
+label IF_FALSE12
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call DrawerGame.movePointer 1
+pop temp 0
+goto WHILE_EXP2
+label WHILE_END2
+push constant 0
+pop this 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

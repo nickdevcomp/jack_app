@@ -1,0 +1,316 @@
+function Eraser.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 2
+push pointer 0
+return
+function Eraser.newFromDrawer 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+call Drawer.x 1
+pop this 0
+push argument 0
+call Drawer.y 1
+pop this 1
+push argument 0
+call Drawer.size 1
+pop this 2
+push pointer 0
+return
+function Eraser.newFromGhost 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+call Ghost.x 1
+pop this 0
+push argument 0
+call Ghost.y 1
+pop this 1
+push argument 0
+call Ghost.size 1
+pop this 2
+push pointer 0
+return
+function Eraser.moveTo 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Eraser.erase 1
+pop temp 0
+push argument 1
+pop this 0
+push argument 2
+pop this 1
+push pointer 0
+call Eraser.erase 1
+pop temp 0
+push pointer 0
+call Eraser.draw 1
+pop temp 0
+push constant 0
+return
+function Eraser.x 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Eraser.y 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Eraser.size 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Eraser.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push constant 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push this 0
+push constant 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push this 2
+add
+push constant 2
+sub
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 2
+add
+push constant 2
+sub
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 2
+push constant 56
+push constant 6
+call OutputExtensions.cleanChars 3
+pop temp 0
+push constant 2
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push constant 4
+push constant 56
+push constant 6
+call OutputExtensions.cleanChars 3
+pop temp 0
+push constant 4
+push constant 56
+call Output.moveCursor 2
+pop temp 0
+push this 1
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+function Eraser.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Eraser.incSize 0
+push argument 0
+pop pointer 0
+push this 1
+push this 2
+add
+push constant 254
+lt
+push this 0
+push this 2
+add
+push constant 378
+lt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Eraser.erase 1
+pop temp 0
+push this 2
+push constant 2
+add
+pop this 2
+push pointer 0
+call Eraser.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Eraser.decSize 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 4
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Eraser.erase 1
+pop temp 0
+push this 2
+push constant 2
+sub
+pop this 2
+push pointer 0
+call Eraser.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Eraser.moveUp 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 1
+push constant 1
+gt
+push constant 0
+push constant 2
+neg
+call Eraser.move 4
+pop temp 0
+push constant 0
+return
+function Eraser.moveDown 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 1
+push this 2
+add
+push constant 254
+lt
+push constant 0
+push constant 2
+call Eraser.move 4
+pop temp 0
+push constant 0
+return
+function Eraser.moveLeft 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 0
+push constant 1
+gt
+push constant 2
+neg
+push constant 0
+call Eraser.move 4
+pop temp 0
+push constant 0
+return
+function Eraser.moveRight 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 0
+push this 2
+add
+push constant 378
+lt
+push constant 2
+push constant 0
+call Eraser.move 4
+pop temp 0
+push constant 0
+return
+function Eraser.move 0
+push argument 0
+pop pointer 0
+push argument 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Eraser.erase 1
+pop temp 0
+push this 0
+push argument 2
+add
+pop this 0
+push this 1
+push argument 3
+add
+pop this 1
+push pointer 0
+call Eraser.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Eraser.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

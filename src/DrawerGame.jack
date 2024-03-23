@@ -1,0 +1,165 @@
+class DrawerGame {
+    field int direction;
+    field int mode;
+    field Drawer drawer;
+    field Eraser eraser;
+    constructor DrawerGame new (){
+        let direction = 0;
+        let mode = 0;
+        let eraser = Eraser.new(0,0, 12);
+        let drawer = Drawer.new(0,0, 12);
+        do initMenu();
+        return this;
+    }
+
+    //init menu
+    method void initMenu ( ) {
+        var String messageX;
+        var String messageY;
+        var String messageType;
+        do Screen.drawRectangle(380, 0, 381, 255);
+        do Screen.drawRectangle(380, 0, 511, 1);
+        do Screen.drawRectangle(380, 254, 511, 255);
+
+        let messageX = "PosX: ";
+        let messageY = "PosY: ";
+        let messageType = "Type: ";
+
+        do Output.moveCursor(2, 50);
+        do Output.printString(messageX);
+        do Output.moveCursor(2, 56);
+        do Output.printString("0");
+        do Output.moveCursor(4, 50);
+        do Output.printString(messageY);
+        do Output.moveCursor(4, 56);
+        do Output.printString("0");
+        do Output.moveCursor(7, 50);
+        do Output.printString(messageType);
+
+
+        do Output.moveCursor(7, 56);
+        do Output.printString("Eraser");
+
+        return;
+    }
+
+    method void dispose ( ) {
+        do drawer.dispose();
+        do eraser.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void switchMode ( ) {
+        if (mode = 0){
+            let drawer = Drawer.newFromEraser(eraser);
+            do eraser.erase();
+            do eraser.dispose();
+            do drawer.draw();
+            let mode = 1;
+            do OutputExtensions.cleanChars(7, 56, 6);
+            do Output.moveCursor(7, 56);
+            do Output.printString("Drawer");
+            return;
+        }
+        if (mode = 1){
+            let eraser = Eraser.newFromDrawer(drawer);
+            do drawer.erase();
+            do drawer.dispose();
+            do eraser.draw();
+            do OutputExtensions.cleanChars(7, 56, 6);
+            do Output.moveCursor(7, 56);
+            do Output.printString("Eraser");
+            let mode = 0;
+            return;
+        }
+        return;
+    }
+
+    method void movePointer ( ) {
+        if (mode = 0) {
+            if (direction = 1) { do eraser.moveUp(); }
+            if (direction = 2) { do eraser.moveDown(); }
+            if (direction = 3) { do eraser.moveLeft(); }
+            if (direction = 4) { do eraser.moveRight(); }
+        }
+        if (mode = 1) {
+            if (direction = 1) { do drawer.moveUp(); }
+            if (direction = 2) { do drawer.moveDown(); }
+            if (direction = 3) { do drawer.moveLeft(); }
+            if (direction = 4) { do drawer.moveRight(); }
+        }
+        do Sys.wait(5);
+        return;
+    }
+
+    method int readCorrectAdressAt(String message, int i, int j, int valueBotEdge, int valueTopEdge) {
+        var boolean exit;
+        var int res;
+        let exit = false;
+        while (~exit){
+            do Output.moveCursor(i, j);
+            let res = KeyboardExtensions.readLimitedInt(3, message);
+            if((res > valueBotEdge) & (res < valueTopEdge)){
+                let exit = true;
+            }
+            else { do OutputExtensions.cleanChars(i, j, message.length() + 3); }
+        }
+        return res;
+    }
+
+
+    method void changeCoordinates ( ) {
+        var int size, x1, y1;
+        var String firstMessage, secondMessage; 
+        var boolean exit;
+        let firstMessage = "Enter X ";
+        let secondMessage = "Enter Y ";
+        let exit = false;
+        if (mode = 0) { let size = eraser.size(); }
+        if (mode = 1) { let size = drawer.size(); }
+        let x1 = readCorrectAdressAt(firstMessage, 14, 50, -1, 378 - size);
+        let y1 = readCorrectAdressAt(secondMessage, 16, 50, -1, 256 - size);
+        do Screen.setColor(false);
+        do OutputExtensions.cleanChars(14, 50, firstMessage.length() + 3);
+        do OutputExtensions.cleanChars(16, 50, secondMessage.length() + 3);
+        if (mode = 0) { do eraser.moveTo(x1, y1); }
+        if (mode = 1) { do drawer.moveTo(x1, y1); }
+        return;
+    }
+
+    method void run ( ) {
+        var char key;
+        var boolean exit;
+        let exit = false;
+
+        while (~exit){
+            while (key = 0){
+                let key = Keyboard.keyPressed();
+            }
+            if (key = 81) { let exit = true; } // exits on q
+            if (mode = 0){
+                if (key = 90) { do eraser.incSize(); } // inc on z
+                if (key = 88) { do eraser.decSize(); } // dec on x
+            }
+            if (mode = 1){
+                if (key = 90) { do drawer.incSize(); } // inc on z
+                if (key = 88) { do drawer.decSize(); } // dec on x
+            }
+            if (key = 68) { do changeCoordinates(); } // enters new coordinates on d
+            if (key = 83) { do switchMode(); } // switch modes on s
+            if (key = 131) {let direction = 1; }
+            if (key = 133) {let direction = 2; }
+            if (key = 130) {let direction = 3; }
+            if (key = 132) {let direction = 4; }
+
+            while (~(key = 0)){
+                let key = Keyboard.keyPressed();
+                do movePointer();
+            }
+
+            let direction = 0;
+        }
+        return;
+    }
+}

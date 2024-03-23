@@ -1,0 +1,12 @@
+class OutputExtensions{
+    function void cleanChars (int row, int begColumn, int len ) {
+        var int i;
+        let i = 0;
+        do Output.moveCursor(row, begColumn + len);
+        while (i < len){
+            do Output.backSpace();
+            let i = i + 1;
+        }
+        return;
+    }
+}

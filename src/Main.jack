@@ -1,0 +1,9 @@
+class Main {
+    function void main ( ) {
+        var DrawerGame drawerGame;
+        let drawerGame = DrawerGame.new();
+        do drawerGame.run();
+        do drawerGame.dispose();
+        return;
+    }
+}

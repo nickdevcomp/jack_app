@@ -1,0 +1,120 @@
+class Eraser{
+    field int x,y;
+    field int size;
+    constructor Eraser new(int x_, int y_, int size_){
+        let x = x_;
+        let y = y_;
+        let size = size_;
+        return this;
+    }
+
+    constructor Eraser newFromDrawer(Drawer drawer){
+        let x = drawer.x();
+        let y = drawer.y();
+        let size = drawer.size();
+        return this;
+    }
+
+    constructor Eraser newFromGhost(Ghost ghost){
+        let x = ghost.x();
+        let y = ghost.y();
+        let size = ghost.size();
+        return this;
+    }
+    
+    method void moveTo ( int x1, int y1 ) {
+        do erase();
+        let x = x1;
+        let y = y1;
+        do erase();
+        do draw();
+        return;
+    }
+
+    method int x ( ) {
+        return x;
+    }
+
+    method int y ( ) {
+        return y;
+    }
+
+    method int size ( ) {
+        return size;
+    }
+
+    method void draw ( ) {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + size, y + 2);
+        do Screen.drawRectangle(x, y, x + 2, y + size);
+        do Screen.drawRectangle(x, y + size - 2, x + size, y + size);
+        do Screen.drawRectangle(x + size - 2, y, x+size, y+size);
+
+        do OutputExtensions.cleanChars(2, 56, 6);
+        do Output.moveCursor(2, 56);
+        do Output.printInt(x);
+        do OutputExtensions.cleanChars(4, 56, 6);
+        do Output.moveCursor(4, 56);
+        do Output.printInt(y);
+        return;
+    }
+
+    method void erase ( ) {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x+size, y+size);
+        return;
+    }
+
+    method void incSize () {
+        if(((y+size) < 254) & ((x+size) < 378)) {
+            do erase();
+            let size = size + 2;
+            do draw();
+        }
+        return;
+    }
+
+    method void decSize ( ) {
+        if(size > 4) {
+            do erase();
+            let size = size - 2;
+            do draw();
+        }
+        return;
+    }
+
+    method void moveUp ( ) {
+        do move(y > 1, 0, -2);
+        return;
+    }
+
+    method void moveDown ( ) {
+        do move(y + size < 254, 0, 2);
+        return;
+    }
+
+    method void moveLeft ( ) {
+        do move(x > 1, -2, 0);
+        return;
+    }
+
+    method void moveRight ( ) {
+        do move(x + size < 378, 2, 0);
+        return;
+    }
+
+    method void move(boolean isMovable, int xShift, int yShift){
+        if (isMovable) {
+            do erase();
+            let x = x + xShift;
+            let y = y + yShift;
+            do draw();
+        }
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

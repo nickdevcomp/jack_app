@@ -1,0 +1,42 @@
+class KeyboardExtensions{
+    function int readLimitedInt(int maxLength, String message) {
+            var int input;
+            var int i;
+            var boolean exit;
+            var boolean end;
+            var boolean back;
+            var char key;
+            let input = 0;
+            let i = 0;
+            let exit = true;
+            let end = false;
+            do Output.printString(message);
+
+            while (exit) {
+                while (((key < 48) | (key > 57)) & ~(key = 128) & ~(key = 129)){
+                    let key = Keyboard.keyPressed(); // Считываем символ с клавиатуры
+                }
+                let end = (key = 128);
+                let back = (key = 129);
+                if (end) {  
+                    let exit = false; // Если встретили символ новой строки, завершаем ввод
+                }
+                if (back){
+                    let i = i - 1;
+                    let input = input / 10;
+                    do Output.backSpace();
+                }
+                if ((~end) & (~back)){
+                    let input = (input * 10) + (key - 48); // Добавляем символ к введенной строке
+                    let i = i + 1; // Увеличиваем счетчик символов
+                    do Output.printChar(key);
+                    let exit = (i < maxLength);
+                }
+                while (~(key = 0)){
+                    let key = Keyboard.keyPressed();
+                }
+            }
+            
+            return input;
+        }
+}

@@ -30,3 +30,5 @@ To run this application, you need the JACK programming language environment set 
 
 1. Clone the repository: git clone https://github.com/nickdevcomp/jack_app
 2. Launch app using n2t JVM server
+
+![Пример изображения](https://img.freepik.com/free-photo/computer-program-coding-screen_53876-138060.jpg?t=st=1711358441~exp=1711362041~hmac=b3e1ddc8cc903b89537fc5a7ba27c3fde78da757a342c2556ce379fed28902bd&w=996)

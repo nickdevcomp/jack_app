@@ -46,6 +46,7 @@ class Drawer{
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x+size, y+size);
 
+        //возможно стоило вынести в отдельный метод
         do OutputExtensions.cleanChars(2, 56, 6);
         do Output.moveCursor(2, 56);
         do Output.printInt(x);

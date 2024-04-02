@@ -17,6 +17,7 @@ class DrawerGame {
         var String messageX;
         var String messageY;
         var String messageType;
+
         do Screen.drawRectangle(380, 0, 381, 255);
         do Screen.drawRectangle(380, 0, 511, 1);
         do Screen.drawRectangle(380, 254, 511, 255);
@@ -25,6 +26,7 @@ class DrawerGame {
         let messageY = "PosY: ";
         let messageType = "Type: ";
 
+        //возможно стоило бы вынести в отедльный метод
         do Output.moveCursor(2, 50);
         do Output.printString(messageX);
         do Output.moveCursor(2, 56);
@@ -53,10 +55,13 @@ class DrawerGame {
     method void switchMode ( ) {
         if (mode = 0){
             let drawer = Drawer.newFromEraser(eraser);
+
             do eraser.erase();
             do eraser.dispose();
             do drawer.draw();
+
             let mode = 1;
+
             do OutputExtensions.cleanChars(7, 56, 6);
             do Output.moveCursor(7, 56);
             do Output.printString("Drawer");
@@ -64,12 +69,14 @@ class DrawerGame {
         }
         if (mode = 1){
             let eraser = Eraser.newFromDrawer(drawer);
+
             do drawer.erase();
             do drawer.dispose();
             do eraser.draw();
             do OutputExtensions.cleanChars(7, 56, 6);
             do Output.moveCursor(7, 56);
             do Output.printString("Eraser");
+
             let mode = 0;
             return;
         }

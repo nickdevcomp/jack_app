@@ -1,0 +1,28 @@
+Хай
+
+Короче я пыталась это сделать по-умному всеми силами, но теперь тут есть только это
+
+1) Имхо стоит бить код на логические блоки. То есть разделять let\do с помощью бек спейсов. То же самое разделять поля и функции
+
+2) Drawer.jack 49-54
+        do OutputExtensions.cleanChars(2, 56, 6);
+        do Output.moveCursor(2, 56);
+        do Output.printInt(x);
+        do OutputExtensions.cleanChars(4, 56, 6);
+        do Output.moveCursor(4, 56);
+        do Output.printInt(y);
+имхо можно вынести в отдельный метод, аналогично
+
+DrawerGame.jack 28-37
+        do Output.moveCursor(2, 50);
+        do Output.printString(messageX);
+        do Output.moveCursor(2, 56);
+        do Output.printString("0");
+        do Output.moveCursor(4, 50);
+        do Output.printString(messageY);
+        do Output.moveCursor(4, 56);
+        do Output.printString("0");
+        do Output.moveCursor(7, 50);
+        do Output.printString(messageType);
+
+3) В остальном круто. Осмысленные названия и разбиение на функции и файлы, все оч чисто и прикольно
